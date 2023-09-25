@@ -78,11 +78,13 @@ To extract the data, **AWS Glue Crawler** was used to load data into **AWS Glue 
 
 ![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_glue_data_catalog_via_athena.png "AWS Glue Data Catalog") 
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_glue_data_catalog_table.png "intl_students_raw Tables in Glue Data Catalog") 
-
 Once these were loaded into the data catalog, data would be transformed and loaded into **AWS Redshift** using **AWS Glue ETL**.  The script/code can be found [here](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/02_SourceCodes/intl-students-ETL.ipynb).
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_glue_etl.png "Transformation using AWS Glue ETL")  
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_glue_etl.png "Transformation using AWS Glue ETL") 
+
+After running the ETL job, tables should now be available in AWS Redshift.
+
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_redshift_table.png "intl_students_raw Tables in Redshift") 
 
 In summary, the following transformations were performed:
 
@@ -95,7 +97,7 @@ In summary, the following transformations were performed:
 
 Using Glue ETL has yielded 3 output tables:
 
-| Output Table Name | Output CSV File | Description |
+| Output Table Name | Description |
 | --- | --- |
 | OECD_EDU_ENRL_2013_2019 | International Students' Enrollment 2013-2019 | 
 | INTL_STUDENTS_PER_POPULATION | International Students' Enrollment 2013-2019 with Population |
