@@ -80,7 +80,7 @@ To extract the data, **AWS Glue Crawler** was used to load data into **AWS Glue 
 
 ![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_data_catalog_table.png "intl_students_raw Tables in Glue Data Catalog") 
 
-Once these were loaded into the data catalog, data would be transformed and loaded into **AWS Redshift** using **AWS Glue ETL**.  The script/code can be found [here](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/02_SourceCodes/ETLjob.ipynb).
+Once these were loaded into the data catalog, data would be transformed and loaded into **AWS Redshift** using **AWS Glue ETL**.  The script/code can be found [here](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/02_SourceCodes/intl-students-ETL.ipynb).
 
 ![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_etl.png "Transformation using AWS Glue ETL")  
 
