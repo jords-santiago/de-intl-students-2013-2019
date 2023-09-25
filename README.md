@@ -20,13 +20,13 @@ For the International Students data, this can be acquired from the Organisation 
 
 The [full dataset in CSV format](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/01_DataSource/01_Raw/01_OECD/EDU_ENRL_MOBILE-en.csv.zip) was downloaded as shown below.
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/OECD_data_download.png "Downloading OECD dataset")  
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/OECD_data_download.png "Downloading OECD dataset")  
 
 #### World Development Indicators
 
 For the World Development Indicators data, this can be found in the World Bank Open Data site.  From its [World Development Indicators DataBank](https://databank.worldbank.org/source/world-development-indicators#), specified indicators can be queried for a given set of countries across a period of time as shown below.  Since the OECD data covers years 2013 to 2019, the [data extract in CSV format](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/01_DataSource/01_Raw/02_WORLD_BANK/Data_Extract_From_World_Development_Indicators.zip) from this databank covers that time period as well.
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/World_Bank_data_download.png "Downloading World Bank dataset") 
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/World_Bank_data_download.png "Downloading World Bank dataset") 
 
 The indicators gathered were the following:
 
@@ -48,7 +48,7 @@ The indicators gathered were the following:
 
 The data from the World Bank needed to be arranged where World Development Indicators per year had its own column.  Unpivot was performed using **Google Sheets** to have the year specified as a row.  The transformed dataset was extracted as a new [CSV file](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/01_DataSource/01_Raw/02_WORLD_BANK/WORLD_BANK_SELECTED_WDI_2013_2019.zip) to be loaded with the other 2 datasets.
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/World_Bank_WDI_prep.png "Unpivot the World Bank dataset") 
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/World_Bank_WDI_prep.png "Unpivot the World Bank dataset") 
 
 #### ISO 3166 Country Codes
 
@@ -58,7 +58,7 @@ Upon checking the datasets for International Students and World Development Indi
 
 The figure below details the flow from raw data from the previous section to their final form loaded into the database.
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/de-flow-intl-students.png "Data Flow") 
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/de-flow-intl-students.png "Data Flow") 
 
 The 3 datasets (in csv format) were uploaded into **AWS S3 Storage**.
 
@@ -74,15 +74,15 @@ To extract the data, **AWS Glue Crawler** was used to load data into **AWS Glue 
 | WORLD_BANK_SELECTED_WDI_2013_2019.csv | intl_students_raw | worldbank |
 | ISO_3166_COUNTRY_CODES.csv | intl_students_raw | iso3166 | 
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_crawlers.png "AWS Crawlers")
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_crawlers.png "AWS Crawlers")
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_data_catalog_via_athena.png "AWS Glue Data Catalog") 
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_glue_data_catalog_via_athena.png "AWS Glue Data Catalog") 
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_data_catalog_table.png "intl_students_raw Tables in Glue Data Catalog") 
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_glue_data_catalog_table.png "intl_students_raw Tables in Glue Data Catalog") 
 
 Once these were loaded into the data catalog, data would be transformed and loaded into **AWS Redshift** using **AWS Glue ETL**.  The script/code can be found [here](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/02_SourceCodes/intl-students-ETL.ipynb).
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_etl.png "Transformation using AWS Glue ETL")  
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Images/aws_glue_etl.png "Transformation using AWS Glue ETL")  
 
 In summary, the following transformations were performed:
 
