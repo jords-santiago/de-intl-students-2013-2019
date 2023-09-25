@@ -7,9 +7,9 @@ This contains and details how data regarding International Students Enrollment f
 
 For the actual analysis (not using cloud services), you may refer to [this](https://github.com/jords-santiago/intl-students-2013-2019).
 
-### Objective/s
+### Objective
 
-* Extract, transform and load data using AWS services
+* Extract, transform and load data using cloud resources (AWS)
 
 ## Methodology
 ### Data Sources
@@ -68,38 +68,45 @@ The 3 datasets (in csv format) were uploaded into **AWS S3 Storage**.
 
 To extract the data, **AWS Glue Crawler** was used to load data into **AWS Glue Data Catalog** into separate tables described below:
 
-| Input CSV file name | Input Table Name |
-|-------------|-----------|
-| EDU_ENRL_MOBILE-en.csv | \[IntlEducation_Stats].\[dbo].\[RAW_OECD_EDU_ENRL] |
-| WORLD_BANK_SELECTED_WDI_2013_2019.csv |  \[IntlEducation_Stats].\[dbo].\[WORLD_BANK_SELECTED_WDI_2013_2019] |
-| ISO_3166_COUNTRY_CODES.csv | \[IntlEducation_Stats].\[dbo].\[ISO_3166_COUNTRY_CODES] | 
+| CSV file name | Data Catalog Database | Table Name |
+|-------------|-----------|-----------|
+| EDU_ENRL_MOBILE-en.csv | intl_students_raw | oecd |
+| WORLD_BANK_SELECTED_WDI_2013_2019.csv | intl_students_raw | worldbank |
+| ISO_3166_COUNTRY_CODES.csv | intl_students_raw | iso3166 | 
 
 ![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_crawlers.png "AWS Crawlers")
 
-![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_data_catalog.png "AWS Glue Data Catalog") 
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_data_catalog_via_athena.png "AWS Glue Data Catalog") 
+
+![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_data_catalog_table.png "intl_students_raw Tables in Glue Data Catalog") 
 
 Once these were loaded into the data catalog, data would be transformed and loaded into **AWS Redshift** using **AWS Glue ETL**.  The script/code can be found [here](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/02_SourceCodes/ETLjob.ipynb).
 
 ![alt text](https://github.com/jords-santiago/de-intl-students-2013-2019/blob/main/99_Pictures/aws_glue_etl.png "Transformation using AWS Glue ETL")  
 
-In summary, the following were performed:
+In summary, the following transformations were performed:
 
 * Filtered out data to only include total number of students (excluded numbers separating males and females)
 * Filtered out invalid years (9999 was set as a catch-all time period) as well as outside of 2013-2019 period
 * Rounded down/truncated values as number of students should be specified as whole numbers
 * Converted country codes into actual country names (using ISO 3166 country codes dataset)
 * Remove redundant values regarding Education Level
-* Included Kosovo in processing as Kosovo is not currently recognized by ISO 3166
 * Joined Population data from World Bank dataset into International Students data
 
-Using SQL has yielded 3 output tables which have been extracted into CSV format:
+Using Glue ETL has yielded 3 output tables:
 
 | Output Table Name | Output CSV File | Description |
-| --- | --- | --- |
-| \[IntlEducation_Stats].\[dbo].\[OECD_EDU_ENRL_2013_2019] | [OECD_Intl_Student_Enrollment_2013_2019.csv](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/01_DataSources/02_Cleaned/OECD_Intl_Student_Enrollment_2013_2019.csv) | International Students' Enrollment 2013-2019 | 
-| \[IntlEducation_Stats].\[dbo].\[INTL_STUDENTS_PER_POPULATION] | [Intl_Students_Per_Population_2013_2019.csv](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/01_DataSources/02_Cleaned/Intl_Students_Per_Population_2013_2019.csv) | International Students' Enrollment 2013-2019 with Population |
-| \[IntlEducation_Stats].\[dbo].\[INTL_STUDENT_ORIGIN_2013_2019] | [Intl_Student_Origin_2013_2019.csv](https://github.com/jords-santiago/intl-students-2013-2019/blob/main/01_DataSources/02_Cleaned/Intl_Student_Origin_2013_2019.csv) | International Students' Countries of Origin 2013-2019 |
+| --- | --- |
+| OECD_EDU_ENRL_2013_2019 | International Students' Enrollment 2013-2019 | 
+| INTL_STUDENTS_PER_POPULATION | International Students' Enrollment 2013-2019 with Population |
+| INTL_STUDENT_ORIGIN_2013_2019 | International Students' Countries of Origin 2013-2019 |
+
+These table should now be ready for use for further analysis/visualization.
 
 ## Key Takeaways
 
+Having able to perform this project using "on-premises" resources but on different platforms (MS SQL and then Python/Jupyter Notebook), it is great that there is an option to have these all provided using AWS services.
 
+This project can further be expanded by having scheduled jobs instead of manual triggers.  Also, extraction of source data can then be done using APIs instead of manual download for a more automated data flow.
+
+However, this project is able to show an application of typical data engineering work (ETL) via cloud resources.
